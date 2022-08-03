@@ -113,12 +113,39 @@
 
                             <div class="form-group col-xs-12 col-sm-12">
                               <label for="seccion">Seccion</label>
-                              <div class="input-group" style="width:100%;">
+
+
+                              <!-- ============================================= -->
+                              <!-- ===== VACIO ===== -->
+                              <!-- ============================================= -->
+                              <div class="input-group boxseccion0" style="width:100%;">
                                 <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
-                                <select class="form-control select2 input-lg" style="width:100%;" name="seccion" placeholder="Ingresar seccion" id="seccion" required>
+                                
+                                <select class="form-control select2 input-lg seccion" style="width:100%;" name="seccion" placeholder="Ingresar seccion" id="seccion" required>
                                   <option value="">Seleccione una seccion</option>
                                   <?php
                                   foreach ($secciones as $secc):
+                                    if(!empty($secc['cod_seccion'])):
+                                  ?>
+                                  <!-- <option value="<?=$secc['cod_seccion']?>"><?=mb_strtoupper($secc['nombre_seccion']).""?></option> -->
+                                  <?php 
+                                    endif;
+                                  endforeach;
+                                  ?>
+                                </select>
+                              </div>
+                              <!-- ============================================= -->
+
+                              <!-- ============================================= -->
+                              <!-- ===== SECCION DE TRAYECTO 1 ===== -->
+                              <!-- ============================================= -->
+                              <!-- <div class="input-group boxseccion1" style="width:100%;display:none;">
+                                <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
+                                
+                                <select class="form-control select2 input-lg seccion" style="width:100%;" name="seccion" placeholder="Ingresar seccion" id="seccion1" required>
+                                  <option value="">Seleccione una seccion</option>
+                                  <?php
+                                  foreach ($secciones1 as $secc):
                                     if(!empty($secc['cod_seccion'])):
                                   ?>
                                   <option value="<?=$secc['cod_seccion']?>"><?=mb_strtoupper($secc['nombre_seccion']).""?></option>
@@ -127,7 +154,73 @@
                                   endforeach;
                                   ?>
                                 </select>
-                              </div>
+                              </div> -->
+                              <!-- ============================================= -->
+
+                              <!-- ============================================= -->
+                              <!-- ===== SECCION DE TRAYECTO 2 ===== -->
+                              <!-- ============================================= -->
+                              <!-- <div class="input-group boxseccion2" style="width:100%;display:none;">
+                                <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
+                                
+                                <select class="form-control select2 input-lg seccion" style="width:100%;" name="seccion" placeholder="Ingresar seccion" id="seccion2" required>
+                                  <option value="">Seleccione una seccion</option>
+                                  <?php
+                                  foreach ($secciones2 as $secc):
+                                    if(!empty($secc['cod_seccion'])):
+                                  ?>
+                                  <option value="<?=$secc['cod_seccion']?>"><?=mb_strtoupper($secc['nombre_seccion']).""?></option>
+                                  <?php 
+                                    endif;
+                                  endforeach;
+                                  ?>
+                                </select>
+                              </div> -->
+                              <!-- ============================================= -->
+
+                              <!-- ============================================= -->
+                              <!-- ===== SECCION DE TRAYECTO 3 ===== -->
+                              <!-- ============================================= -->
+                              <!-- <div class="input-group boxseccion3" style="width:100%;display:none;">
+                                <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
+                                
+                                <select class="form-control select2 input-lg seccion" style="width:100%;" name="seccion" placeholder="Ingresar seccion" id="seccion3" required>
+                                  <option value="">Seleccione una seccion</option>
+                                  <?php
+                                  foreach ($secciones3 as $secc):
+                                    if(!empty($secc['cod_seccion'])):
+                                  ?>
+                                  <option value="<?=$secc['cod_seccion']?>"><?=mb_strtoupper($secc['nombre_seccion']).""?></option>
+                                  <?php 
+                                    endif;
+                                  endforeach;
+                                  ?>
+                                </select>
+                              </div> -->
+                              <!-- ============================================= -->
+
+                              <!-- ============================================= -->
+                              <!-- ===== SECCION DE TRAYECTO 4 ===== -->
+                              <!-- ============================================= -->
+                              <!-- <div class="input-group boxseccion4" style="width:100%;display:none;">
+                                <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
+                                
+                                <select class="form-control select2 input-lg seccion" style="width:100%;" name="seccion" placeholder="Ingresar seccion" id="seccion4" required>
+                                  <option value="">Seleccione una seccion</option>
+                                  <?php
+                                  foreach ($secciones4 as $secc):
+                                    if(!empty($secc['cod_seccion'])):
+                                  ?>
+                                  <option value="<?=$secc['cod_seccion']?>"><?=mb_strtoupper($secc['nombre_seccion']).""?></option>
+                                  <?php 
+                                    endif;
+                                  endforeach;
+                                  ?>
+                                </select>
+                              </div> -->
+                              <!-- ============================================= -->
+
+
                               <div style="width:100%;text-align:right;">
                                 <span id="seccionS"  class="mensajeError"></span>
                               </div>
@@ -136,11 +229,16 @@
 
                             <div class="form-group col-xs-12 col-sm-12">
                               <label for="alumnos">Alumnos</label>
-                              <div class="input-group" style="width:100%;">
+                              
+                              <!-- ============================================= -->
+                              <!-- ===== ALUMNOS DE TRAYECTO VACIO ===== -->
+                              <!-- ============================================= -->
+                              <div class="input-group boxalumnos0" style="width:100%;">
                                 <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
-                                <select class="form-control select2 input-lg" style="width:100%;" name="alumnos[]" placeholder="Ingresar alumnos" id="alumnos" multiple="multiple" required>
+                                <select class="form-control select2 input-lg alumnos" style="width:100%;" name="alumnos[]" placeholder="Ingresar alumnos" id="alumnos0" multiple="multiple" required>
                                   <option value="" disabled="">Seleccione los alumnos</option>
                                   <?php
+                                  /*
                                   foreach ($seccionAlumnos as $secc):
                                     if(!empty($secc['cedula_alumno'])):
                                   ?>
@@ -154,9 +252,121 @@
                                   <?php 
                                     endif;
                                   endforeach;
+                                  */
                                   ?>
                                 </select>
                               </div>
+                              <!-- ============================================= -->
+
+
+                              <!-- ============================================= -->
+                              <!-- ===== ALUMNOS DE TRAYECTO 1 ===== -->
+                              <!-- ============================================= -->
+                              <div class="input-group boxalumnos1" style="width:100%;display:none;">
+                                <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
+                                <select class="form-control select2 input-lg alumnos" style="width:100%;" name="alumnos[]" placeholder="Ingresar alumnos" id="alumnos1" multiple="multiple" required>
+                                  <option value="" disabled="">Seleccione los alumnos</option>
+                                  <?php
+                                  foreach ($seccionAlumnos1 as $secc):
+                                    if(!empty($secc['cedula_alumno'])):
+                                  ?>
+                                  <option class="<?=$secc['cod_seccion']?>" <?php foreach ($gruposAlumnos as $grupos) {
+                                    if(!empty($grupos['id_SA'])){
+                                      if($grupos['id_SA']==$secc['id_SA']){
+                                          echo "disabled";
+                                      }
+                                    }
+                                  } ?> value="<?=$secc['id_SA']?>"><?=$secc['cedula_alumno']." ".$secc['nombre_alumno']." ".$secc['apellido_alumno']." <span class='spanseccion'>".$secc['cod_seccion']."</span>";;?></option>
+                                  <?php 
+                                    endif;
+                                  endforeach;
+                                  ?>
+                                </select>
+                              </div>
+                              <!-- ============================================= -->
+
+
+                              <!-- ============================================= -->
+                              <!-- ===== ALUMNOS DE TRAYECTO 2 ===== -->
+                              <!-- ============================================= -->
+                              <div class="input-group boxalumnos2" style="width:100%;display:none;">
+                                <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
+                                <select class="form-control select2 input-lg alumnos" style="width:100%;" name="alumnos[]" placeholder="Ingresar alumnos" id="alumnos2" multiple="multiple" required>
+                                  <option value="" disabled="">Seleccione los alumnos</option>
+                                  <?php
+                                  foreach ($seccionAlumnos2 as $secc):
+                                    if(!empty($secc['cedula_alumno'])):
+                                  ?>
+                                  <option class="<?=$secc['cod_seccion']?>" <?php foreach ($gruposAlumnos as $grupos) {
+                                    if(!empty($grupos['id_SA'])){
+                                      if($grupos['id_SA']==$secc['id_SA']){
+                                          echo "disabled";
+                                      }
+                                    }
+                                  } ?> value="<?=$secc['id_SA']?>"><?=$secc['cedula_alumno']." ".$secc['nombre_alumno']." ".$secc['apellido_alumno']." <span class='spanseccion'>".$secc['cod_seccion']."</span>";;?></option>
+                                  <?php 
+                                    endif;
+                                  endforeach;
+                                  ?>
+                                </select>
+                              </div>
+                              <!-- ============================================= -->
+
+
+                              <!-- ============================================= -->
+                              <!-- ===== ALUMNOS DE TRAYECTO 3 ===== -->
+                              <!-- ============================================= -->
+                              <div class="input-group boxalumnos3" style="width:100%;display:none;">
+                                <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
+                                <select class="form-control select2 input-lg alumnos" style="width:100%;" name="alumnos[]" placeholder="Ingresar alumnos" id="alumnos3" multiple="multiple" required>
+                                  <option value="" disabled="">Seleccione los alumnos</option>
+                                  <?php
+                                  foreach ($seccionAlumnos3 as $secc):
+                                    if(!empty($secc['cedula_alumno'])):
+                                  ?>
+                                  <option class="<?=$secc['cod_seccion']?>" <?php foreach ($gruposAlumnos as $grupos) {
+                                    if(!empty($grupos['id_SA'])){
+                                      if($grupos['id_SA']==$secc['id_SA']){
+                                          echo "disabled";
+                                      }
+                                    }
+                                  } ?> value="<?=$secc['id_SA']?>"><?=$secc['cedula_alumno']." ".$secc['nombre_alumno']." ".$secc['apellido_alumno']." <span class='spanseccion'>".$secc['cod_seccion']."</span>";;?></option>
+                                  <?php 
+                                    endif;
+                                  endforeach;
+                                  ?>
+                                </select>
+                              </div>
+                              <!-- ============================================= -->
+
+
+                              <!-- ============================================= -->
+                              <!-- ===== ALUMNOS DE TRAYECTO 4 ===== -->
+                              <!-- ============================================= -->
+                              <div class="input-group boxalumnos4" style="width:100%;display:none;">
+                                <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
+                                <select class="form-control select2 input-lg alumnos" style="width:100%;" name="alumnos[]" placeholder="Ingresar alumnos" id="alumnos4" multiple="multiple" required>
+                                  <option value="" disabled="">Seleccione los alumnos</option>
+                                  <?php
+                                  foreach ($seccionAlumnos4 as $secc):
+                                    if(!empty($secc['cedula_alumno'])):
+                                  ?>
+                                  <option class="<?=$secc['cod_seccion']?>" <?php foreach ($gruposAlumnos as $grupos) {
+                                    if(!empty($grupos['id_SA'])){
+                                      if($grupos['id_SA']==$secc['id_SA']){
+                                          echo "disabled";
+                                      }
+                                    }
+                                  } ?> value="<?=$secc['id_SA']?>"><?=$secc['cedula_alumno']." ".$secc['nombre_alumno']." ".$secc['apellido_alumno']." <span class='spanseccion'>".$secc['cod_seccion']."</span>";?></option>
+                                  <?php 
+                                    endif;
+                                  endforeach;
+                                  ?>
+                                </select>
+                              </div>
+                              <!-- ============================================= -->
+
+
                               <div style="width:100%;text-align:right;">
                                 <span id="alumnosE"  class="mensajeError"></span>
                               </div>
@@ -471,37 +681,71 @@
 <script>
 $(document).ready(function(){ 
 
-$('#nombre').on('input', function () {      
-  this.value = this.value.replace(/[^a-zA-Z Ñ ñ Á á É é Í í Ó ó Ú ú ]/g,''); });
+  $('#nombre').on('input', function () {      
+    this.value = this.value.replace(/[^a-zA-Z Ñ ñ Á á É é Í í Ó ó Ú ú ]/g,''); });
 
-// $('#alumnos').on('input', function () {      
-//   this.value = this.value.replace(/[^a-zA-Z Ñ ñ Á á É é Í í Ó ó Ú ú ]/g,''); });
+  // $('#alumnos').on('input', function () {      
+  //   this.value = this.value.replace(/[^a-zA-Z Ñ ñ Á á É é Í í Ó ó Ú ú ]/g,''); });
+    
+  $('#trayecto').change(function(){
+    var trayecto = $(this).val();
 
-/*$('#trayecto').change(function(){
+    // $(".boxseccion0").hide();
+    // $(".boxseccion1").hide();
+    // $(".boxseccion2").hide();
+    // $(".boxseccion3").hide();
+    // $(".boxseccion4").hide();
 
-   var trayecto = $(this).val();
-   var r = false;
-   console.log(trayecto);
-   
-   alert(trayecto);
-    if (trayecto == ' '){
-       $("#trayectoSC").html("Debe seleccionar un trayecto");
-       console.log("entro al if ");
-   }else{
-       $("#trayectoSC").HTML("");
-       console.log("entro al if ");
-   }
-}
+    // $(".boxalumnos0").hide();
+    // $(".boxalumnos1").hide();
+    // $(".boxalumnos2").hide();
+    // $(".boxalumnos3").hide();
+    // $(".boxalumnos4").hide();
 
-*/ 
+    // if(trayecto==""){
+    //   $(".boxseccion0").show();
+    //   $(".boxalumnos0").show();
+    // }else{
+    //   $(".boxseccion"+trayecto).show();
+    //   $(".boxalumnos"+trayecto).show();
+    // }
+    // $("option.spanseccion").hide();
+    // console.log($("option.spanseccion"));
+  });
+  $(".seccion").change(function(){
+    // var trayecto = $("#trayecto").val();
+    // var cod = $(this).val();
+    // if(trayecto==""){
+
+    // }else{
+    //   alert(cod);
+    // }
+  });
+
+  /*$('#trayecto').change(function(){
+
+     var trayecto = $(this).val();
+     var r = false;
+     console.log(trayecto);
+     
+     alert(trayecto);
+      if (trayecto == ' '){
+         $("#trayectoSC").html("Debe seleccionar un trayecto");
+         console.log("entro al if ");
+     }else{
+         $("#trayectoSC").HTML("");
+         console.log("entro al if ");
+     }
+  }
+
+  */ 
 
     var response = $(".responses").val();
 
 
   $(".modificarButtonModal").click(function(){
     var id = $(this).val();
-    /*alert(id);
-*/
+    // alert(id);
     var response = validar(true, id);
     if(response){
     swal.fire({ 
@@ -589,9 +833,9 @@ $('#nombre').on('input', function () {
           } 
       });
     }
-
-
   });
+
+
 
 
   $(".modificarBtn").click(function(){
@@ -820,7 +1064,9 @@ $('#nombre').on('input', function () {
 
   });
 
-  function validar(modificar = false, id=""){
+
+});
+function validar(modificar = false, id=""){
   var form = "";
   if(!modificar){
     form = "#modalAgregarSeccion";
@@ -873,11 +1119,9 @@ $('#nombre').on('input', function () {
   }else{
     validado=false;
   }
-/*  alert(validado);*/
+  // alert(validado);
   return validado;
 }
-
- });
  
 </script>
 </body>
