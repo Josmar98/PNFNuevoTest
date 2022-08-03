@@ -21,14 +21,10 @@
 			// $this->con = parent::__construct();
 			parent::__construct();
 		}
-		public function Consultar($trayecto=""){
+		public function Consultar(){
 			
 			try {
-				if($trayecto==""){
-					$query = parent::prepare('SELECT * FROM secciones, periodos WHERE periodos.id_periodo = secciones.id_periodo and periodos.estatus = 1 and secciones.estatus = 1');
-				}else{
-					$query = parent::prepare('SELECT * FROM secciones, periodos WHERE periodos.id_periodo = secciones.id_periodo and periodos.estatus = 1 and secciones.estatus = 1 and secciones.trayecto_seccion = '.$trayecto);
-				}
+				$query = parent::prepare('SELECT * FROM secciones, periodos WHERE periodos.id_periodo = secciones.id_periodo and periodos.estatus = 1 and secciones.estatus = 1');
 				$respuestaArreglo = '';
 				$query->execute();
 				$query->setFetchMode(parent::FETCH_ASSOC);
@@ -41,14 +37,9 @@
 			}
 		}
 
-
-		public function ConsultarSeccionAlumnos($trayecto=""){
+		public function ConsultarSeccionAlumnos(){
 			try {
-				if($trayecto==""){
-					$query = parent::prepare("SELECT * FROM periodos, secciones, seccion_alumno, alumnos WHERE periodos.id_periodo = secciones.id_periodo and secciones.cod_seccion = seccion_alumno.cod_seccion and seccion_alumno.cedula_alumno=alumnos.cedula_alumno and alumnos.estatus = 1 and periodos.estatus = 1 and secciones.estatus = 1");
-				}else{
-					$query = parent::prepare("SELECT * FROM periodos, secciones, seccion_alumno, alumnos WHERE periodos.id_periodo = secciones.id_periodo and secciones.cod_seccion = seccion_alumno.cod_seccion and seccion_alumno.cedula_alumno=alumnos.cedula_alumno and alumnos.estatus = 1 and periodos.estatus = 1 and secciones.estatus = 1 and secciones.trayecto_seccion = ".$trayecto);
-				}
+				$query = parent::prepare("SELECT * FROM periodos, secciones, seccion_alumno, alumnos WHERE periodos.id_periodo = secciones.id_periodo and secciones.cod_seccion = seccion_alumno.cod_seccion and seccion_alumno.cedula_alumno=alumnos.cedula_alumno and alumnos.estatus = 1 and periodos.estatus = 1 and secciones.estatus = 1");
 				$respuestaArreglo = '';
 				$query->execute();
 				$query->setFetchMode(parent::FETCH_ASSOC);

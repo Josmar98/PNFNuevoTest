@@ -16,14 +16,10 @@
 			// $this->con = parent::__construct();
 			parent::__construct();
 		}
-		public function Consultar($trayecto=""){
+		public function Consultar(){
 			
 			try {
-				if($trayecto==""){
-					$query = parent::prepare('SELECT * FROM alumnos WHERE estatus = 1');
-				}else{
-					$query = parent::prepare('SELECT * FROM alumnos WHERE estatus = 1 and trayecto_alumno = '.$trayecto);
-				}
+				$query = parent::prepare('SELECT * FROM alumnos WHERE estatus = 1');
 				$respuestaArreglo = '';
 				$query->execute();
 				$query->setFetchMode(parent::FETCH_ASSOC);
@@ -36,7 +32,11 @@
 			}
 		}
 
-		public function setAgregar($datos){
+
+
+
+
+	public function setAgregar($datos){
 			$this->cedula = $datos['cedula'];
 			$this->nombre = $datos['nombre'];
 			$this->apellido = $datos['apellido'];

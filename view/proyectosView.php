@@ -689,7 +689,28 @@ $(document).ready(function(){
     
   $('#trayecto').change(function(){
     var trayecto = $(this).val();
-
+    $.ajax({
+      url: 'Proyectos/Buscar',    
+      type: 'POST',  
+      data: {
+        Buscar: true,   
+        secciones: true,   
+        trayecto: trayecto,       
+      },
+      success: function(respuesta){       
+        alert(respuesta); 
+        var resp = JSON.parse(respuesta);   
+        // alert(resp.msj);
+        // if (resp.msj == "Good") {  
+        //   $("#modificarButton"+cod_seccion).click(); 
+        // }
+      },
+      error: function(respuesta){       
+        // alert(respuesta);
+        var resp = JSON.parse(respuesta);
+        console.log(resp);
+      }
+    });
     // $(".boxseccion0").hide();
     // $(".boxseccion1").hide();
     // $(".boxseccion2").hide();

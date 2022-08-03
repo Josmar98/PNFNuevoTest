@@ -61,7 +61,9 @@
 					echo json_encode($buscar);
 				}
 				if(isset($_POST['Buscar']) && isset($_POST['secciones']) && isset($_POST['trayecto'])){
-					
+					$trayecto = $_POST['trayecto'];
+					$buscar $this->seccion->
+					echo "Trayecto: ".$trayecto;
 				}
 			}
 		}
