@@ -121,7 +121,7 @@
                               <label for="alumnos">Alumnos</label>
                               <div class="input-group " style="width:100%;">
                                 <span class="input-group-addon" style="width:5%;"><i class="fa fa-address-card"></i></span> 
-                                <select class="form-control select2 input-lg" style="width:100%;" name="trayecto" placeholder="Cargar alumnos" id="alumnos" multiple="multiple" required>
+                                <select class="form-control select2SeccionAlumnos input-lg" style="width:100%;" name="trayecto" placeholder="Cargar alumnos" id="alumnos" multiple="multiple" required>
                                   <option value="" disabled="">Cargar Alumnos</option>
                                    <?php
                                   foreach ($alumnos as $alum):
@@ -418,7 +418,7 @@
                               <label for="alumnos<?=$data['cod_seccion']?>">Alumnos</label>
                               <div class="input-group " style="width:100%;">
                                 <span class="input-group-addon" style="width:8%;"><i class="fa fa-address-card"></i></span> 
-                                <select class="form-control select2 input-lg alumnosModificar" style="width:100%;color:red;" name="<?=$data['cod_seccion']?>" placeholder="Cargar alumnos" id="alumnos<?=$data['cod_seccion']?>" multiple="multiple" required>
+                                <select class="form-control select2SeccionAlumnos input-lg alumnosModificar" style="width:100%;color:red;" name="<?=$data['cod_seccion']?>" placeholder="Cargar alumnos" id="alumnos<?=$data['cod_seccion']?>" multiple="multiple" required>
                                   <option value="" disabled="">Cargar Alumnos</option>
                                    <?php
                                   foreach ($alumnos as $alum):

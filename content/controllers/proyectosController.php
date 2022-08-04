@@ -62,8 +62,34 @@
 				}
 				if(isset($_POST['Buscar']) && isset($_POST['secciones']) && isset($_POST['trayecto'])){
 					$trayecto = $_POST['trayecto'];
-					$buscar $this->seccion->
-					echo "Trayecto: ".$trayecto;
+					$buscar = $this->seccion->Consultar($trayecto);
+					$response = [];
+					if(count($buscar)>0){
+						$response['data'] = $buscar;
+						$response['msj'] = "Good";
+					}else{
+						$response['msj'] = "Vacio";
+					}
+					echo json_encode($response);
+				}
+				if(isset($_POST['Buscar']) && isset($_POST['alumnos']) && isset($_POST['cod_seccion'])){
+					$cod_seccion = $_POST['cod_seccion'];
+					$buscar = $this->seccion->ConsultarSeccionAlumnos($cod_seccion);
+					$response = [];
+					if(count($buscar)>0){
+						$response['data'] = $buscar;
+						$response['msj'] = "Good";
+						$buscar2 = $this->proyecto->ConsultarGrupos($cod_seccion);
+						if(count($buscar2)>0){
+							$response['msjProyectos'] = "Good";
+							$response['dataProyectos'] = $buscar2;
+						}else{
+							$response['msjProyectos'] = "Vacio";
+						}
+					}else{
+						$response['msj'] = "Vacio";
+					}
+					echo json_encode($response);
 				}
 			}
 		}
