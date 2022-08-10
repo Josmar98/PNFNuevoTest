@@ -93,7 +93,7 @@
                               <label for="seccion">Seccion</label>                              
                               <div class="input-group" style="width:100%;">
                                 <span class="input-group-addon" style="width:5%;"><i class="fa fa-cogs"></i></span> 
-                                <select class="form-control select2 input-lg" style="width:100%;" name="nuevo" id="seccion">
+                                <select class="form-control select2 input-lg" style="width:100%;" name="seccion" id="seccion">
                                   <option value="">Sección</option>
                                   <?php foreach ($secciones as $date): if(!empty($date['cod_seccion'])):  ?>
                                   <option value="<?php echo $date['cod_seccion'] ?>"><?php echo $date['nombre_seccion'] ?></option>
@@ -114,7 +114,7 @@
                                 <select class="form-control select2 input-lg" style="width:100%;" name="nuevoPerfil" id="saber">
                                   <option value="">Saber Complementario</option>
                                   <?php foreach ($saberes as $dateS): if(!empty($dateS['id_SC'])):  ?>
-                                  <option value="<?php echo $dateS['id_SC'] ?>"><?php echo $dateS['nombreSC'] ?></option>
+                                  <!-- <option value="<?php echo $dateS['id_SC'] ?>"><?php echo $dateS['nombreSC'] ?></option> -->
                                   <?php endif; endforeach; ?>
                                 </select>
                               </div>
@@ -289,7 +289,7 @@
                                   <label for="seccion<?=$data['id_clase'];?>">Seccion</label>                             
                                   <div class="input-group" style="width:100%;">
                                     <span class="input-group-addon" style="width:5%;"><i class="fa fa-cogs"></i></span> 
-                                    <select class="form-control select2 input-lg" style="width:100%;" name="nuevo" id="seccion<?=$data['id_clase'];?>">
+                                    <select class="form-control select2 input-lg seccionModificar" style="width:100%;" name="<?=$data['id_clase'];?>" id="seccion<?=$data['id_clase'];?>">
                                       <option value="">Sección</option>
                                       <?php foreach ($secciones as $date): if(!empty($date['cod_seccion'])):   ?>
                                       <option value="<?php echo $date['cod_seccion'] ?>" <?php if($date['cod_seccion']==$data['cod_seccion']){ echo "selected"; } ?> ><?php echo $date['nombre_seccion'] ?></option>
@@ -301,16 +301,19 @@
                                   </div>
                                 </div>
 
-
                                 <!-- ENTRADA PARA EL SABER -->                              
                                 <div class="form-group col-xs-12 col-sm-12">
                                   <label for="saber<?=$data['id_clase'];?>">Saber complementario</label>
                                   <div class="input-group" style="width:100%;">
                                     <span class="input-group-addon" style="width:5%;"><i class="fa fa-indent"></i></span> 
-                                    <select class="form-control select2 input-lg" style="width:100%;" name="nuevoPerfil" id="saber<?=$data['id_clase'];?>">
+                                    <select class="form-control select2 input-lg saberModificar" style="width:100%;" name="nuevoPerfil" id="saber<?=$data['id_clase'];?>">
                                       <option value="">Saber Complementario</option>
                                       <?php foreach ($saberes as $dateS): if(!empty($dateS['id_SC'])): ?>
+                                        <?php if (($dateS['trayecto_SC']==$data['trayecto_SC'])&&($dateS['fase_SC']==$data['fase_SC'])): ?>
+                                          
                                       <option value="<?php echo $dateS['id_SC'] ?>" <?php if($dateS['id_SC']==$data['id_SC']){ echo "selected"; } ?> ><?php echo $dateS['nombreSC'] ?></option>
+
+                                        <?php endif; ?>
                                       <?php endif; endforeach; ?>
                                     </select>
                                   </div>
@@ -428,6 +431,136 @@
 <script>
 $(document).ready(function(){ 
   
+  $('#seccion').change(function(){
+    var seccion = $(this).val();
+    if(seccion==""){
+      var html = '';
+      html += '<option value="">Saber Complementario</option>';
+      $("#saber").html(html);
+    }else{
+      $.ajax({
+        url: 'Clases/Buscar',    
+        type: 'POST',  
+        data: {
+          Buscar: true,   
+          saberes: true,   
+          cod_seccion: seccion,       
+        },
+        success: function(respuesta){       
+          // alert(respuesta);
+          var resp = JSON.parse(respuesta);
+          // console.log(resp);
+          if (resp.msj == "Good") {
+            var data = resp.data;
+            var dataSaberes = "";
+            if(resp.msjSaberes=="Good"){
+              dataSaberes = resp.dataSaberes;
+            }
+            // console.log("DATA: ");
+            // console.log(data);
+            // console.log("SABERES: ");
+            // console.log(dataSaberes);
+            var html = '';
+            html += '<option value="">Saber Complementario</option>';
+            for (var i = 0; i < data.length; i++) {
+              html += '<option value="'+data[i]['id_SC']+'" ';
+
+              if(dataSaberes.length>0){
+                for (var j = 0; j < dataSaberes.length; j++) {
+                  if(dataSaberes[j]['id_SC']==data[i]['id_SC']){
+                    html += 'disabled="disabled"'
+                  }
+                }
+              }
+              
+              html += ' >'+data[i]['nombreSC']+'</option>';
+            }
+            $("#saber").html(html);
+          }
+          if(resp.msj == "Vacio"){
+            var html = '';
+            html += '<option value="">Saber Complementario</option>';
+            $("#saber").html(html);
+          }
+        },
+        error: function(respuesta){       
+          // alert(respuesta);
+          var resp = JSON.parse(respuesta);
+          console.log(resp);
+        }
+      });
+    }
+  });
+
+  $('.seccionModificar').change(function(){
+    var id = $(this).attr("name");
+    var seccion = $(this).val();
+    // alert(id);
+    // alert(seccion);
+    if(seccion==""){
+      var html = '';
+      html += '<option value="">Saber Complementario</option>';
+      $("#saber"+id).html(html);
+    }else{
+      $.ajax({
+        url: 'Clases/Buscar',    
+        type: 'POST',  
+        data: {
+          Buscar: true,   
+          saberes: true,   
+          cod_seccion: seccion,       
+        },
+        success: function(respuesta){       
+          // alert(respuesta);
+          var resp = JSON.parse(respuesta);   
+          // alert(resp.msj);
+          if (resp.msj == "Good") {  
+            var data = resp.data;
+            var dataSaberes = "";
+            if(resp.msjSaberes=="Good"){
+              dataSaberes = resp.dataSaberes;
+            }
+            // console.log("DATA: ");
+            // console.log(data);
+            // console.log("Saberes: ");
+            // console.log(dataSaberes);
+            // console.log($("#saber"+id).html());
+            var html = '';
+            html += '<option value="">Saber Complementario</option>';
+            // alert(dataSaberes);
+            // alert(dataSaberes);
+
+            for (var i = 0; i < data.length; i++) {
+              html += '<option value="'+data[i]['id_SC']+'" ';
+              if(dataSaberes.length>0){
+                for (var j = 0; j < dataSaberes.length; j++) {
+                  if(dataSaberes[j]['id_SC']==data[i]['id_SC']){
+                    if(dataSaberes[j]['id_clase']==id){
+                      html += 'selected="selected"'
+                    }else{
+                      html += 'disabled="disabled"'
+                    }
+                  }
+                }
+              }
+              html += ' >'+data[i]['nombreSC']+'</option>';
+            }
+            $("#saber"+id).html(html);
+          }
+          if(resp.msj == "Vacio"){
+            var html = '';
+            html += '<option value="">Saber Complementario</option>';
+            $("#saber"+id).html(html);
+          }
+        },
+        error: function(respuesta){       
+          // alert(respuesta);
+          var resp = JSON.parse(respuesta);
+          console.log(resp);
+        }
+      });
+    }
+  });
 
   $(".modificarButtonModal").click(function(){
     var id = $(this).val();
@@ -523,7 +656,7 @@ $(document).ready(function(){
 
 
   $("#guardar").click(function(){
-      var response = validar();
+    var response = validar();
     if(response){
       swal.fire({ 
             title: "¿Desea guardar los datos?",

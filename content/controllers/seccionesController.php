@@ -44,7 +44,27 @@
 					$buscar = $this->seccion->getOne($_POST['cod_seccion']);
 					echo json_encode($buscar);
 				}
-
+				if(isset($_POST['Buscar']) && isset($_POST['alumnos']) && isset($_POST['trayecto'])){
+					$trayecto = $_POST['trayecto'];
+					// echo $trayecto;
+					$buscar = $this->alumno->Consultar($trayecto);
+					// print_r($buscar);
+					$response = [];
+					if(count($buscar)>0){
+						$response['data'] = $buscar;
+						$response['msj'] = "Good";
+						$buscar2 = $this->seccion->ConsultarSecciones($trayecto);
+						if(count($buscar2)>0){
+							$response['msjSecciones'] = "Good";
+							$response['dataSecciones'] = $buscar2;
+						}else{
+							$response['msjSecciones'] = "Vacio";
+						}
+					}else{
+						$response['msj'] = "Vacio";
+					}
+					echo json_encode($response);
+				}
 			}
 		}
 		

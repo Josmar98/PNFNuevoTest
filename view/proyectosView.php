@@ -713,14 +713,13 @@ $(document).ready(function(){
             var html = '';
             html += '<option disabled="" value="">Seleccione los alumnos</option>';
             // alert(dataProyectos);
-            // alert(dataProyectos);
             for (var i = 0; i < data.length; i++) {
               html += '<option value="'+data[i]['id_SA']+'" ';
 
               if(dataProyectos.length>0){
                 for (var j = 0; j < dataProyectos.length; j++) {
                   if(dataProyectos[j]['id_SA']==data[i]['id_SA']){
-                    if($("#nombre"+id).val()==dataProyectos[j]['titulo_proyecto']){
+                    if(dataProyectos[j]['cod_proyecto']==id){
                       html += 'selected="selected"'
                     }else{
                       html += 'disabled="disabled"'

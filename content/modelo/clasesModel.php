@@ -20,15 +20,19 @@
 		}
 
 
-				public function Consultar(){
-			
+		public function Consultar($cod_seccion=""){
 			try {
-				$query = parent::prepare('SELECT * FROM clases, saberes, secciones, profesores WHERE clases.cedula_profesor = profesores.cedula_profesor and clases.cod_seccion = secciones.cod_seccion and clases.id_SC = saberes.id_SC and clases.estatus = 1 and profesores.estatus = 1 and secciones.estatus = 1 and saberes.estatus = 1');
+				if($cod_seccion==""){
+					$query = parent::prepare("SELECT * FROM clases, saberes, secciones, profesores WHERE clases.cedula_profesor = profesores.cedula_profesor and clases.cod_seccion = secciones.cod_seccion and clases.id_SC = saberes.id_SC and clases.estatus = 1 and profesores.estatus = 1 and secciones.estatus = 1 and saberes.estatus = 1");
+				}
+				if($cod_seccion!=""){
+					$query = parent::prepare("SELECT * FROM clases, saberes, secciones, profesores WHERE clases.cedula_profesor = profesores.cedula_profesor and clases.cod_seccion = secciones.cod_seccion and clases.id_SC = saberes.id_SC and clases.estatus = 1 and profesores.estatus = 1 and secciones.estatus = 1 and saberes.estatus = 1 and secciones.cod_seccion = '{$cod_seccion}'");
+				}
 				$respuestaArreglo = '';
 				$query->execute();
 				$query->setFetchMode(parent::FETCH_ASSOC);
 				$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
-				$respuestaArreglo += ['estatus' => true];
+				// $respuestaArreglo += ['estatus' => true];
 				return $respuestaArreglo;
 			} catch (PDOException $e) {
 				$errorReturn = ['estatus' => false];
@@ -40,8 +44,7 @@
 
 
 
-			public function ConsultarProfesores(){
-			
+		public function ConsultarProfesores(){
 			try {
 				$query = parent::prepare('SELECT * FROM profesores WHERE estatus = 1');
 				$respuestaArreglo = '';
@@ -58,7 +61,7 @@
 		}
 
 
-			public function ConsultarSecciones(){
+		public function ConsultarSecciones(){
 			
 			try {
 				$query = parent::prepare('SELECT * FROM secciones WHERE estatus = 1');
@@ -92,7 +95,7 @@
 			}
 		}
 
-				public function ConsultarSA(){
+		public function ConsultarSA(){
 			
 			try {
 				$query = parent::prepare('SELECT * FROM seccion_alumno WHERE estatus = 1');

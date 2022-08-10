@@ -6,14 +6,23 @@
 	use content\component\headElement as headElement;
 	use content\modelo\homeModel as homeModel;
 	use content\modelo\clasesModel as clasesModel;
+	use content\modelo\seccionesModel as seccionesModel;
+	use content\modelo\saberesModel as saberesModel;
+	use content\modelo\profesoresModel as profesoresModel;
 
 	class clasesController{
 		private $url;
 		private $clase;
+		private $seccion;
+		private $saber;
+		private $profesor;
 		private $idClase;
 		function __construct($url){
 			$this->url = $url;
 			$this->clase = new clasesModel();
+			$this->seccion = new seccionesModel();
+			$this->saber = new saberesModel();
+			$this->profesor = new profesoresModel();
 		} 
 
 		public function Consultar(){
@@ -22,15 +31,73 @@
 			$_css->Heading(); 
 
 			$clases = $this->clase->Consultar();
-			$secciones = $this->clase->ConsultarSecciones();			
-			$sA = $this->clase->ConsultarSA();			
-			$saberes = $this->clase->ConsultarSaberes();
-			$profesores = $this->clase->ConsultarProfesores();	
+			$secciones = $this->seccion->Consultar();			
+			$saberes = $this->saber->Consultar();			
+			$profesores = $this->profesor->Consultar();			
+
+			// print_r($profesores);	
+			// $sA = $this->clase->ConsultarSA();			
+			// $saberes = $this->clase->ConsultarSaberes();
+			// $profesores = $this->clase->ConsultarProfesores();	
 
 
 			
 			$url = $this->url;
 			require_once("view/clasesView.php");
+		}
+
+		public function Buscar(){
+			if($_POST){		
+				if (isset($_POST['Buscar']) && isset($_POST['userNofif'])) {
+					$buscar = $this->seccion->getOne($_POST['userNofif']);
+					echo json_encode($buscar);
+				}
+				if(isset($_POST['Buscar']) && isset($_POST['saberes']) && isset($_POST['cod_seccion'])){
+					$cod_seccion = $_POST['cod_seccion'];
+					$seccionesG = $this->seccion->getOne($cod_seccion);
+					$trayecto = "";
+					$fase = "";
+					if(!empty($seccionesG['data'][0]['trayecto_seccion'])){
+						$trayecto = $seccionesG['data'][0]['trayecto_seccion'];
+						$secciones = $this->seccion->Consultar($trayecto);
+						foreach ($secciones as $key) {
+							if(!empty($key['cod_seccion'])){
+								if($key['cod_seccion']==$cod_seccion){
+									$fase = $key['nombre_periodo'];
+								}
+							}
+						}
+					}
+					$response = [];
+					if($trayecto!="" && $fase != ""){
+						$trayectoN = "";
+						$faseN = "";
+						if($trayecto=="I"){ $trayectoN = "1"; }else if($trayecto=="1"){ $trayectoN = "1"; }
+						if($trayecto=="II"){ $trayectoN = "2"; }else if($trayecto=="2"){ $trayectoN = "2"; }
+						if($fase=="I"){ $faseN = "1"; }else if($fase=="1"){ $faseN = "1"; }
+						if($fase=="II"){ $faseN = "2"; }else if($fase=="2"){ $faseN = "2"; }
+						$buscar = $this->saber->getSaber($trayectoN,$faseN);
+						// print_r($buscar);
+						if(count($buscar)>0){
+							$response['data'] = $buscar;
+							$response['msj'] = "Good";
+							$buscar2 = $this->clase->Consultar($cod_seccion);
+							// print_r($buscar2);
+							if(count($buscar2)>0){
+								$response['msjSaberes'] = "Good";
+								$response['dataSaberes'] = $buscar2;
+							}else{
+								$response['msjSaberes'] = "Vacio";
+							}
+						}else{
+							$response['msj'] = "Vacio";
+						}
+					}else{
+						$response['msj'] = "Vacio";
+					}
+					echo json_encode($response);
+				}
+			}
 		}
 		
 		public function Agregar(){

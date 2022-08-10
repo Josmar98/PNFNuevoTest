@@ -40,6 +40,26 @@
 			}
 		}
 
+		public function ConsultarSecciones($trayecto=""){
+			try {
+				if($trayecto==""){
+					$query = parent::prepare("SELECT * FROM periodos, secciones, seccion_alumno, alumnos WHERE periodos.id_periodo = secciones.id_periodo and secciones.cod_seccion = seccion_alumno.cod_seccion and seccion_alumno.cedula_alumno=alumnos.cedula_alumno and alumnos.estatus = 1 and periodos.estatus = 1 and secciones.estatus = 1");
+				}else{
+					$query = parent::prepare("SELECT * FROM periodos, secciones, seccion_alumno, alumnos WHERE periodos.id_periodo = secciones.id_periodo and secciones.cod_seccion = seccion_alumno.cod_seccion and seccion_alumno.cedula_alumno=alumnos.cedula_alumno and alumnos.estatus = 1 and periodos.estatus = 1 and secciones.estatus = 1 and alumnos.trayecto_alumno = '{$trayecto}'");
+				}
+
+				$respuestaArreglo = '';
+				$query->execute();
+				$query->setFetchMode(parent::FETCH_ASSOC);
+				$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
+				return $respuestaArreglo;
+			} catch (PDOException $e) {
+				$errorReturn = ['estatus' => false];
+				$errorReturn += ['info' => "error sql:{$e}"];
+				return $errorReturn;
+			}
+		}
+
 		public function ConsultarSeccionAlumnos($cod_seccion=""){
 			try {
 				if($cod_seccion==""){

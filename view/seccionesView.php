@@ -127,13 +127,13 @@
                                   foreach ($alumnos as $alum):
                                     if(!empty($alum['cedula_alumno'])):
                                   ?>
-                                  <option 
+                                  <!-- <option  -->
                                     <?php
                                       // foreach ($seccionAlumnos as $key): if(!empty($key['cedula_alumno'])): if($key['cedula_alumno'] == $alum['cedula_alumno']):
                                       //   echo 'disabled="disabled"';
                                       // endif; endif; endforeach;
                                     ?>
-                                   value="<?=$alum['cedula_alumno']?>"><?=mb_strtoupper($alum['cedula_alumno'])." ".$alum['nombre_alumno']." "."".$alum['apellido_alumno']." "?></option>
+                                   <!-- value="<?=$alum['cedula_alumno']?>"><?=mb_strtoupper($alum['cedula_alumno'])." ".$alum['nombre_alumno']." "."".$alum['apellido_alumno']." "?></option> -->
                                   <?php 
                                     endif;
                                   endforeach;
@@ -423,19 +423,21 @@
                                    <?php
                                   foreach ($alumnos as $alum):
                                     if(!empty($alum['cedula_alumno'])):
+                                      if($alum['trayecto_alumno']==$data['trayecto_seccion']){
                                   ?>
                                   <option <?php foreach ($seccionAlumnos as $secAlum) {
                                     if(!empty($secAlum['cedula_alumno'])){
-                                      if($secAlum['cedula_alumno'] == $alum['cedula_alumno']){
-                                        if($secAlum['cod_seccion'] == $data['cod_seccion']){
-                                          echo "selected";
-                                        }else{
-                                          echo "disabled";
+                                        if($secAlum['cedula_alumno'] == $alum['cedula_alumno']){
+                                          if($secAlum['cod_seccion'] == $data['cod_seccion']){
+                                            echo "selected";
+                                          }else{
+                                            echo "disabled";
+                                          }
                                         }
-                                      }
                                     }
                                   } ?> value="<?=$alum['cedula_alumno']?>" ><?=$alum['cedula_alumno']." ".ucwords(mb_strtolower($alum['nombre_alumno']))." "."".ucwords(mb_strtolower($alum['apellido_alumno']))." "?></option>
                                   <?php 
+                                      }
                                     endif;
                                   endforeach;
                                   ?>
@@ -542,7 +544,8 @@ $(document).ready(function(){
         $("#alumnosS").html("Debe seleccionar entre "+minimo+" y "+maximo+" alumnos para conformar la sección");
       }
     }
-  }); 
+  });
+
   $(".alumnosModificar").change(function(){
     var id = $(this).attr("name");
     var alumnos = $("#alumnos"+id).val();
@@ -559,6 +562,136 @@ $(document).ready(function(){
       }
     }
   }); 
+
+  $('#trayecto').change(function(){
+    var trayecto = $(this).val();
+    if(trayecto==""){
+      var html = '';
+      html += '<option disabled="" value="">Cargar Alumnos</option>';
+      $("#alumnos").html(html);
+
+    }else{
+      $.ajax({
+        url: 'Secciones/Buscar',    
+        type: 'POST',  
+        data: {
+          Buscar: true,   
+          alumnos: true,   
+          trayecto: trayecto,       
+        },
+        success: function(respuesta){       
+          // alert(respuesta);
+          var resp = JSON.parse(respuesta);   
+          // alert(resp.msj);
+          if (resp.msj == "Good") {  
+            var data = resp.data;
+            var dataSecciones = "";
+            if(resp.msjSecciones=="Good"){
+              dataSecciones = resp.dataSecciones;
+            }
+            // console.log("DATA: ");
+            // console.log(data);
+            // console.log("SECCIONES: ");
+            // console.log(dataSecciones);
+            // console.log(data);
+            // console.log($("#alumnos").html());
+            var html = '';
+            html += '<option disabled="" value="">Cargar Alumnos</option>';
+            for (var i = 0; i < data.length; i++) {
+              html += '<option value="'+data[i]['cedula_alumno']+'"';
+              if(dataSecciones.length>0){
+                for (var j = 0; j < dataSecciones.length; j++) {
+                  if(dataSecciones[j]['trayecto_alumno']==data[i]['trayecto_alumno']){
+                    html += 'disabled="disabled"'
+                  }
+                }
+              }
+              html += '>'+data[i]['cedula_alumno']+" "+data[i]['nombre_alumno']+" "+data[i]['apellido_alumno']+'</option>';
+            }
+            $("#alumnos").html(html);
+          }
+          if(resp.msj == "Vacio"){
+            var html = '';
+            html += '<option disabled="" value="">Cargar Alumnos</option>';
+            $("#alumnos").html(html);
+          }
+        },
+        error: function(respuesta){       
+          // alert(respuesta);
+          var resp = JSON.parse(respuesta);
+          console.log(resp);
+        }
+      });
+    }
+  });
+
+  $('.trayectoModificar').change(function(){
+    var id = $(this).attr("name");
+    // console.log(id);
+    var trayecto = $(this).val();
+    if(trayecto==""){
+      var html = '';
+      html += '<option disabled="" value="">Cargar Alumnos</option>';
+      $("#alumnos"+id).html(html);
+
+    }else{
+      $.ajax({
+        url: 'Secciones/Buscar',    
+        type: 'POST',  
+        data: {
+          Buscar: true,   
+          alumnos: true,   
+          trayecto: trayecto,       
+        },
+        success: function(respuesta){       
+          // alert(respuesta);
+          var resp = JSON.parse(respuesta);   
+          // alert(resp.msj);
+          if (resp.msj == "Good") {  
+            var data = resp.data;
+            var dataSecciones = "";
+            if(resp.msjSecciones=="Good"){
+              dataSecciones = resp.dataSecciones;
+            }
+            // console.log("DATA: ");
+            // console.log(data);
+            // console.log("SECCIONES: ");
+            // console.log(dataSecciones);
+            // console.log(data);
+            // console.log($("#alumnos"+id).html());
+            var html = '';
+            html += '<option disabled="" value="">Cargar Alumnos</option>';
+            for (var i = 0; i < data.length; i++) {
+              html += '<option value="'+data[i]['cedula_alumno']+'"';
+              if(dataSecciones.length>0){
+                for (var j = 0; j < dataSecciones.length; j++) {
+                  if(dataSecciones[j]['cedula_alumno']==data[i]['cedula_alumno']){
+                    if(dataSecciones[j]['cod_seccion']==id){
+                      html += 'selected="selected"';
+                    }else{
+                      html += 'disabled="disabled"';
+                    }
+                  }
+                }
+              }
+              html += '>'+data[i]['cedula_alumno']+" "+data[i]['nombre_alumno']+" "+data[i]['apellido_alumno']+'</option>';
+            }
+            $("#alumnos"+id).html(html);
+          }
+          if(resp.msj == "Vacio"){
+            var html = '';
+            html += '<option disabled="" value="">Cargar Alumnos</option>';
+            $("#alumnos"+id).html(html);
+          }
+        },
+        error: function(respuesta){       
+          // alert(respuesta);
+          var resp = JSON.parse(respuesta);
+          console.log(resp);
+        }
+      });
+    }
+  });
 
   $(".modificarButtonModal").click(function(){
     var id = $(this).val();
