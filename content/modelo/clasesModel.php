@@ -42,75 +42,73 @@
 		}
 
 
+		// public function ConsultarProfesores(){
+		// 	try {
+		// 		$query = parent::prepare('SELECT * FROM profesores WHERE estatus = 1');
+		// 		$respuestaArreglo = '';
+		// 		$query->execute();
+		// 		$query->setFetchMode(parent::FETCH_ASSOC);
+		// 		$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
+		// 		$respuestaArreglo += ['estatus' => true];
+		// 		return $respuestaArreglo;
+		// 	} catch (PDOException $e) {
+		// 		$errorReturn = ['estatus' => false];
+		// 		$errorReturn += ['info' => "error sql:{$e}"];
+		// 		return $errorReturn;
+		// 	}
+		// }
 
 
-		public function ConsultarProfesores(){
-			try {
-				$query = parent::prepare('SELECT * FROM profesores WHERE estatus = 1');
-				$respuestaArreglo = '';
-				$query->execute();
-				$query->setFetchMode(parent::FETCH_ASSOC);
-				$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
-				$respuestaArreglo += ['estatus' => true];
-				return $respuestaArreglo;
-			} catch (PDOException $e) {
-				$errorReturn = ['estatus' => false];
-				$errorReturn += ['info' => "error sql:{$e}"];
-				return $errorReturn;
-			}
-		}
-
-
-		public function ConsultarSecciones(){
+		// public function ConsultarSecciones(){
 			
-			try {
-				$query = parent::prepare('SELECT * FROM secciones WHERE estatus = 1');
-				$respuestaArreglo = '';
-				$query->execute();
-				$query->setFetchMode(parent::FETCH_ASSOC);
-				$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
-				$respuestaArreglo += ['estatus' => true];
-				return $respuestaArreglo;
-			} catch (PDOException $e) {
-				$errorReturn = ['estatus' => false];
-				$errorReturn += ['info' => "error sql:{$e}"];
-				return $errorReturn;
-			}
-		}
+		// 	try {
+		// 		$query = parent::prepare('SELECT * FROM secciones WHERE estatus = 1');
+		// 		$respuestaArreglo = '';
+		// 		$query->execute();
+		// 		$query->setFetchMode(parent::FETCH_ASSOC);
+		// 		$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
+		// 		$respuestaArreglo += ['estatus' => true];
+		// 		return $respuestaArreglo;
+		// 	} catch (PDOException $e) {
+		// 		$errorReturn = ['estatus' => false];
+		// 		$errorReturn += ['info' => "error sql:{$e}"];
+		// 		return $errorReturn;
+		// 	}
+		// }
 
-		public function ConsultarSaberes(){
+		// public function ConsultarSaberes(){
 			
-			try {
-				$query = parent::prepare('SELECT * FROM saberes WHERE estatus = 1');
-				$respuestaArreglo = '';
-				$query->execute();
-				$query->setFetchMode(parent::FETCH_ASSOC);
-				$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
-				$respuestaArreglo += ['estatus' => true];
-				return $respuestaArreglo;
-			} catch (PDOException $e) {
-				$errorReturn = ['estatus' => false];
-				$errorReturn += ['info' => "error sql:{$e}"];
-				return $errorReturn;
-			}
-		}
+		// 	try {
+		// 		$query = parent::prepare('SELECT * FROM saberes WHERE estatus = 1');
+		// 		$respuestaArreglo = '';
+		// 		$query->execute();
+		// 		$query->setFetchMode(parent::FETCH_ASSOC);
+		// 		$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
+		// 		$respuestaArreglo += ['estatus' => true];
+		// 		return $respuestaArreglo;
+		// 	} catch (PDOException $e) {
+		// 		$errorReturn = ['estatus' => false];
+		// 		$errorReturn += ['info' => "error sql:{$e}"];
+		// 		return $errorReturn;
+		// 	}
+		// }
 
-		public function ConsultarSA(){
+		// public function ConsultarSA(){
 			
-			try {
-				$query = parent::prepare('SELECT * FROM seccion_alumno WHERE estatus = 1');
-				$respuestaArreglo = '';
-				$query->execute();
-				$query->setFetchMode(parent::FETCH_ASSOC);
-				$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
-				$respuestaArreglo += ['estatus' => true];
-				return $respuestaArreglo;
-			} catch (PDOException $e) {
-				$errorReturn = ['estatus' => false];
-				$errorReturn += ['info' => "error sql:{$e}"];
-				return $errorReturn;
-			}
-		}
+		// 	try {
+		// 		$query = parent::prepare('SELECT * FROM seccion_alumno WHERE estatus = 1');
+		// 		$respuestaArreglo = '';
+		// 		$query->execute();
+		// 		$query->setFetchMode(parent::FETCH_ASSOC);
+		// 		$respuestaArreglo = $query->fetchAll(parent::FETCH_ASSOC); 
+		// 		$respuestaArreglo += ['estatus' => true];
+		// 		return $respuestaArreglo;
+		// 	} catch (PDOException $e) {
+		// 		$errorReturn = ['estatus' => false];
+		// 		$errorReturn += ['info' => "error sql:{$e}"];
+		// 		return $errorReturn;
+		// 	}
+		// }
 
 
 
