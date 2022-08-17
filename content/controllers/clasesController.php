@@ -9,8 +9,10 @@
 	use content\modelo\seccionesModel as seccionesModel;
 	use content\modelo\saberesModel as saberesModel;
 	use content\modelo\profesoresModel as profesoresModel;
+	use content\traits\Utility;
 
 	class clasesController{
+		use Utility;
 		private $url;
 		private $clase;
 		private $seccion;
@@ -55,6 +57,7 @@
 				if(isset($_POST['Buscar']) && isset($_POST['saberes']) && isset($_POST['cod_seccion'])){
 					$cod_seccion = $_POST['cod_seccion'];
 					$seccionesG = $this->seccion->getOne($cod_seccion);
+					// print_r($seccionesG);
 					$trayecto = "";
 					$fase = "";
 					if(!empty($seccionesG['data'][0]['trayecto_seccion'])){
@@ -64,6 +67,7 @@
 							if(!empty($key['cod_seccion'])){
 								if($key['cod_seccion']==$cod_seccion){
 									$fase = $key['nombre_periodo'];
+									// echo $fase;
 								}
 							}
 						}
@@ -72,10 +76,14 @@
 					if($trayecto!="" && $fase != ""){
 						$trayectoN = "";
 						$faseN = "";
+						// echo $trayecto."-".$fase;
 						if($trayecto=="I"){ $trayectoN = "1"; }else if($trayecto=="1"){ $trayectoN = "1"; }
 						if($trayecto=="II"){ $trayectoN = "2"; }else if($trayecto=="2"){ $trayectoN = "2"; }
+						if($trayecto=="III"){ $trayectoN = "3"; }else if($trayecto=="3"){ $trayectoN = "3"; }
+						if($trayecto=="IV"){ $trayectoN = "4"; }else if($trayecto=="4"){ $trayectoN = "4"; }
 						if($fase=="I"){ $faseN = "1"; }else if($fase=="1"){ $faseN = "1"; }
 						if($fase=="II"){ $faseN = "2"; }else if($fase=="2"){ $faseN = "2"; }
+						// echo $trayectoN."-".	$faseN;
 						$buscar = $this->saber->getSaber($trayectoN,$faseN);
 						// print_r($buscar);
 						if(count($buscar)>0){

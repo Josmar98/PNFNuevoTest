@@ -6,8 +6,10 @@
 	use content\component\headElement as headElement;
 	use content\modelo\homeModel as homeModel;
 	use content\modelo\profesoresModel as profesoresModel;
+	use content\traits\Utility;
 
 	class profesoresController{
+		use Utility;
 		private $url;
 		private $profesor;
 
@@ -34,13 +36,28 @@
 			}
 		}
 
+		public function Cargar(){
+			// var_dump($_FILES["file"]["tmp_name"]);
+			// var_dump($_FILES["file"]["tmp_name"][0]);
+			if (isset($_FILES)) {
+				$respuesta = $this->profesor->Cargar($_FILES["file"]["tmp_name"][0]);
+				// var_dump($respuesta);
+				if($respuesta['msj']=="Good")
+					echo json_encode($respuesta);
+				}else{
+					echo json_encode(['msj'=>"Error"]);
+				}
+
+			
+			
+		}
+
 		public function Agregar(){
 			if($_POST){		
-				if (!empty($_POST['cedula']) && !empty($_POST['Agregar']) && !empty($_POST['nombre']) && !empty($_POST['apellido']) && !empty($_POST['correo']) && !empty($_POST['telefono'])) {
+				if (!empty($_POST['cedula']) && !empty($_POST['Agregar']) && !empty($_POST['nombre']) && !empty($_POST['apellido']) && !empty($_POST['telefono'])) {
 					$datos['cedula'] = $_POST['cedula'];
 					$datos['nombre'] = ucwords(mb_strtolower($_POST['nombre']));
 					$datos['apellido'] = ucwords(mb_strtolower($_POST['apellido']));
-					$datos['correo'] = mb_strtolower($_POST['correo']);
 					$datos['telefono'] = $_POST['telefono'];
 					$buscar = $this->profesor->getOne($_POST['cedula']);
 					if($buscar['msj']=="Good"){
@@ -69,12 +86,11 @@
 
 		public function Modificar(){
 			if($_POST){		
-				if (!empty($_POST['cedula']) && !empty($_POST['codigo']) && !empty($_POST['Editar']) && !empty($_POST['nombre']) && !empty($_POST['apellido']) && !empty($_POST['correo']) && !empty($_POST['telefono'])) {
+				if (!empty($_POST['cedula']) && !empty($_POST['codigo']) && !empty($_POST['Editar']) && !empty($_POST['nombre']) && !empty($_POST['apellido']) && !empty($_POST['telefono'])) {
 					$datos['id'] = $_POST['codigo'];
 					$datos['cedula'] = $_POST['cedula'];
 					$datos['nombre'] = ucwords(mb_strtolower($_POST['nombre']));
 					$datos['apellido'] = ucwords(mb_strtolower($_POST['apellido']));
-					$datos['correo'] = mb_strtolower($_POST['correo']);
 					$datos['telefono'] = $_POST['telefono'];
 					$buscar = $this->profesor->getOne($_POST['cedula']);
 					if($buscar['msj']=="Good"){

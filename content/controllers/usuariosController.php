@@ -6,8 +6,9 @@
 	use content\component\headElement as headElement;
 	use content\modelo\homeModel as homeModel;
 	use content\modelo\usuariosModel as usuariosModel;
-
+	use content\traits\Utility;
 	class usuariosController{
+		use Utility;
 		private $url;
 		private $usuario;
 		function __construct($url){
@@ -28,6 +29,7 @@
 		
 		public function Agregar(){
 			if($_POST){		
+				echo "asdasd CONTROL ";
 				if (!empty($_POST['cedula']) && !empty($_POST['Agregar']) && !empty($_POST['user']) && !empty($_POST['pass']) && !empty($_POST['rol'])) {
 					$datos['cedula'] = $_POST['cedula'];
 					$datos['user'] = $_POST['user'];

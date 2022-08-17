@@ -23,8 +23,8 @@
         <small><?php echo "Ver ".$url; ?></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="?route=Home"><i class="fa fa-dashboard"></i> Inicio </a></li>
-        <li><a href="?route=<?php echo $url ?>"><?php echo $url; ?></a></li>
+        <li><a href="<?=_ROUTE_.$this->encriptar("Home"); ?>"><i class="fa fa-dashboard"></i> Inicio </a></li>
+        <li><a href="<?=_ROUTE_.$this->encriptar("Proyectos"); ?>"><?php echo $url; ?></a></li>
         <li class="active"><?php if(!empty($action)){echo $action;} echo " ". $url; ?></li>
       </ol>
     </section>
@@ -39,11 +39,12 @@
           <div class="box">
             <div class="box-header">
               <div class="col-xs-12 col-sm-6">
-                <img src="assets/img/logolista.png" style="width:25px;color:red !importante;">
+                <img src="assets/img/logolista.png" style="width:25px;">
                 <h3 class="box-title"><?php echo "".$url.""; ?></h3>
               </div>
               <div class="col-xs-12 col-sm-6" style="text-align:right">
                 <button class="btn enviar2" style=""  data-toggle="modal" data-target="#modalAgregarSeccion">Agregar Nuevo</button>
+                  <input type="hidden" id="url" value="<?= $this->encriptar($this->url); ?>">
 
                  <!--=====================================
               MODAL AGREGAR Seccion
@@ -502,6 +503,7 @@ $(document).ready(function(){
   //   this.value = this.value.replace(/[^a-zA-Z Ñ ñ Á á É é Í í Ó ó Ú ú ]/g,''); });
     
   $('#trayecto').change(function(){
+    var url = $("#url").val();
     var trayecto = $(this).val();
     if(trayecto==""){
       var html = '';
@@ -514,14 +516,14 @@ $(document).ready(function(){
 
     }else{
       $.ajax({
-        url: 'Proyectos/Buscar',    
+        url: url+'/Buscar',    
         type: 'POST',  
         data: {
           Buscar: true,   
           secciones: true,   
           trayecto: trayecto,       
         },
-        success: function(respuesta){       
+        success: function(respuesta){
           var resp = JSON.parse(respuesta);   
           // alert(resp.msj);
           if (resp.msj == "Good") {  
@@ -560,6 +562,8 @@ $(document).ready(function(){
   });
 
   $('.trayectoModificar').change(function(){
+
+    var url = $("#url").val();
     var id = $(this).attr("name");
     var trayecto = $(this).val();
     if(trayecto==""){
@@ -572,7 +576,7 @@ $(document).ready(function(){
       $("#alumnos"+id).html(html2);
     }else{
       $.ajax({
-        url: 'Proyectos/Buscar',    
+        url: url+'/Buscar',    
         type: 'POST',  
         data: {
           Buscar: true,   
@@ -603,6 +607,10 @@ $(document).ready(function(){
             html += '<option value="">Seleccione una sección</option>';
             $("#seccion"+id).html(html);
 
+            var html2 = '';
+            html2 += '<option disabled="" value="">Seleccione los alumnos</option>';
+            $("#alumnos"+id).html(html2);
+
           }
         },
         error: function(respuesta){       
@@ -615,6 +623,8 @@ $(document).ready(function(){
   });
 
   $('#seccion').change(function(){
+    var url = $("#url").val();
+
     var seccion = $(this).val();
     if(seccion==""){
       var html = '';
@@ -622,7 +632,7 @@ $(document).ready(function(){
       $("#alumnos").html(html);
     }else{
       $.ajax({
-        url: 'Proyectos/Buscar',    
+        url: url+'/Buscar',    
         type: 'POST',  
         data: {
           Buscar: true,   
@@ -680,6 +690,8 @@ $(document).ready(function(){
   });
 
   $('.seccionModificar').change(function(){
+
+    var url = $("#url").val();
     var id = $(this).attr("name");
     var seccion = $(this).val();
     if(seccion==""){
@@ -688,7 +700,7 @@ $(document).ready(function(){
       $("#alumnos"+id).html(html);
     }else{
       $.ajax({
-        url: 'Proyectos/Buscar',    
+        url: url+'/Buscar',    
         type: 'POST',  
         data: {
           Buscar: true,   
@@ -774,6 +786,8 @@ $(document).ready(function(){
   });
 
   $(".modificarButtonModal").click(function(){
+
+    var url = $("#url").val();
     var id = $(this).val();
     // alert(id);
     var response = validar(true, id);
@@ -798,7 +812,7 @@ $(document).ready(function(){
            /* alert(id+" "+nombre+" "+trayecto+" "+seccion+" "+alumnos);
             console.log(alumnos);*/
             $.ajax({
-              url: 'Proyectos/Modificar',    
+              url: url+'/Modificar',    
               type: 'POST',   
               data: {
                 Editar: true,   
@@ -866,7 +880,7 @@ $(document).ready(function(){
   });
 
   $(".modificarBtn").click(function(){
-
+    var url = $("#url").val();
     swal.fire({ 
           title: "¿Desea modificar los datos?",
           text: "Se movera al formulario para modificar los datos, ¿desea continuar?",
@@ -879,21 +893,21 @@ $(document).ready(function(){
       }).then((isConfirm) => {
           if (isConfirm.value){            
             /*window.alert($(this).val());*/
-            let cod_seccion = $(this).val();
-            // alert(cod_seccion);
+            let cod_proyecto = $(this).val();
+            // alert(cod_proyecto);
             $.ajax({
-              url: 'Secciones/Buscar',    
+              url: url+'/Buscar',    
               type: 'POST',  
               data: {
                 Buscar: true,   
-                cod_seccion: cod_seccion,       
+                cod_proyecto: cod_proyecto,       
               },
               success: function(respuesta){       
                 // alert(respuesta); 
                 var resp = JSON.parse(respuesta);   
                 // alert(resp.msj);
                 if (resp.msj == "Good") {  
-                  $("#modificarButton"+cod_seccion).click(); 
+                  $("#modificarButton"+cod_proyecto).click(); 
                 }        
               },
               error: function(respuesta){       
@@ -914,6 +928,8 @@ $(document).ready(function(){
   });
 
   $(".eliminarBtn").click(function(){
+
+    var url = $("#url").val();
       swal.fire({ 
           title: "¿Desea borrar los datos?",
           text: "Se borraran los datos escogidos, ¿desea continuar?",
@@ -940,7 +956,7 @@ $(document).ready(function(){
                       var cod = $(this).val();
                       // alert(cod);
                       $.ajax({
-                        url: 'Proyectos/Eliminar',    
+                        url: url+'/Eliminar',    
                         type: 'POST',   
                         data: {
                           Eliminar: true,   
@@ -1000,6 +1016,8 @@ $(document).ready(function(){
   });
  
   $("#guardar").click(function(){
+
+    var url = $("#url").val();
     var response = validar();
     if(response){
       swal.fire({ 
@@ -1022,7 +1040,7 @@ $(document).ready(function(){
 
             // alert(nombre + ' ' + seccion + ' ' + trayecto+ ' ' + alumnos);
               $.ajax({
-                url: 'Proyectos/Agregar',
+                url: url+'/Agregar',
                 type: 'POST',   
                 data: {
                   Agregar: true,   

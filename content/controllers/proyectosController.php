@@ -8,8 +8,11 @@
 	use content\modelo\proyectosModel as proyectosModel;
 	use content\modelo\seccionesModel as seccionesModel;
 	use content\modelo\alumnosModel as alumnosModel;
+	use content\traits\Utility;
+
 
 	class proyectosController{
+		use Utility;
 		private $url;
 		private $proyecto;
 		private $seccion;
@@ -56,8 +59,8 @@
 
 		public function Buscar(){
 			if($_POST){		
-				if (isset($_POST['Buscar']) && isset($_POST['userNofif'])) {
-					$buscar = $this->seccion->getOne($_POST['userNofif']);
+				if (isset($_POST['Buscar']) && isset($_POST['cod_proyecto'])) {
+					$buscar = $this->proyecto->getOne($_POST['cod_proyecto']);
 					echo json_encode($buscar);
 				}
 				if(isset($_POST['Buscar']) && isset($_POST['secciones']) && isset($_POST['trayecto'])){

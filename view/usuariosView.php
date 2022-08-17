@@ -23,8 +23,8 @@
         <small><?php echo "Ver ".$url; ?></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="?route=Home"><i class="fa fa-dashboard"></i> Inicio </a></li>
-        <li><a href="?route=<?php echo $url ?>"><?php echo $url; ?></a></li>
+        <li><a href="<?=_ROUTE_.$this->encriptar("Home"); ?>"><i class="fa fa-dashboard"></i> Inicio </a></li>
+        <li><a href="<?=_ROUTE_.$this->encriptar("Usuarios"); ?>"><?php echo $url; ?></a></li>
         <li class="active"><?php if(!empty($action)){echo $action;} echo " ". $url; ?></li>
       </ol>
     </section>
@@ -39,13 +39,14 @@
           <div class="box">
             <div class="box-header">
               <div class="col-xs-12 col-sm-6">
-                <img src="assets/img/logolista.png" style="width:25px;color:red !importante;">
+                <img src="assets/img/logolista.png" style="width:25px;">
                 <h3 class="box-title"><?php echo "".$url.""; ?></h3>
               </div>
               <div class="col-xs-12 col-sm-6" style="text-align:right">
 
 
                 <button type="button" class="btn enviar2 btn-next btn-fill btn btn-primary btn-wd btn-sm" data-toggle="modal" data-target="#modalAgregarUsuario">Agregar Nuevo</button>
+                  <input type="hidden" id="url" value="<?= $this->encriptar($this->url); ?>">
 
                  <!--=====================================
               MODAL AGREGAR USUARIO
@@ -522,6 +523,7 @@ $(".confirmarPassword").keyup(function(){
 
 
   $("#guardar").click(function(){
+    var url = $("#url").val();
     // alert('hola');
 
     var response = validar();
@@ -545,8 +547,10 @@ $(".confirmarPassword").keyup(function(){
           let user = $("#user").val();
           let pass = $("#pass").val();
 
+          // alert("asdasd");
+          // alert(url);
           $.ajax({
-            url: 'Usuarios/Agregar',    
+            url: url+'/Agregar',    
             type: 'POST',   
             data: {
               Agregar: true,   
@@ -555,24 +559,25 @@ $(".confirmarPassword").keyup(function(){
               user: user,       
               pass: pass,
             },
-            success: function(respuesta){       
+            success: function(respuesta){     
+              alert(respuesta);  
               var data = JSON.parse(respuesta);    
                // window.alert(respuesta);
               // alert("Hola");
               // alert(data);   
-               if (data.msj === "Good") {   
-                 Swal.fire({
-                  type: 'success',
-                  title: '¡Registro Exitoso!',
-                  text: 'Has agregado al usuario ' + user + ' al sistema',
-                  footer: 'SCHSL',
-                  timer: 4000,
-                  showCloseButton: false,            
-                  showConfirmButton: false,
-                }).then((isConfirm) => {
+              if (data.msj === "Good") {   
+                  Swal.fire({
+                    type: 'success',
+                    title: '¡Registro Exitoso!',
+                    text: 'Has agregado al usuario ' + user + ' al sistema',
+                    footer: 'SCHSL',
+                    timer: 4000,
+                    showCloseButton: false,            
+                    showConfirmButton: false,
+                  }).then((isConfirm) => {
                       location.reload();
                   });
-               }
+              }
               if (datos.msj === "Repetido") {   
                   Swal.fire({
                     type: 'warning',
@@ -580,22 +585,22 @@ $(".confirmarPassword").keyup(function(){
                     text: 'El alumno ' + nombre + ' ' + apellido + ' ya esta agregado al sistema',
                     footer: 'SCHSL', timer: 3000, showCloseButton: false, showConfirmButton: false,
                   });
-                }
-                if (datos.msj === "Error") {   
+              }
+              if (datos.msj === "Error") {   
                   Swal.fire({
                     type: 'error',
                     title: '¡Error la guardar los cambio!',
                     text: 'Intente de nuevo, si el error persiste por favor contacte con el soporte',
                     footer: 'SCHSL', timer: 3000, showCloseButton: false, showConfirmButton: false,
                   });
-                }     
-                if (datos.msj === "Vacio") {   
+              }     
+              if (datos.msj === "Vacio") {   
                   Swal.fire({
                     type: 'warning',
                     title: '¡Debe rellenar todos los campos!',
                     footer: 'SCHSL', timer: 3000, showCloseButton: false, showConfirmButton: false,
                   });
-                }                                         
+              }                                         
             },
             error: function(respuesta){       
               var data = JSON.parse(respuesta);
@@ -620,6 +625,7 @@ $(".confirmarPassword").keyup(function(){
   });
 
   $(".modificarBtn").click(function(){
+    var url = $("#url").val();
     swal.fire({ 
           title: "¿Desea modificar los datos?",
           text: "Se movera al formulario para modificar los datos, ¿desea continuar?",
@@ -635,7 +641,7 @@ $(".confirmarPassword").keyup(function(){
             let userModif = $(this).val();
             // alert(userModif);
             $.ajax({
-              url: 'Usuarios/Buscar',    
+              url: url+'/Buscar',    
               type: 'POST',  
               data: {
                 Buscar: true,   
@@ -672,6 +678,7 @@ $(".confirmarPassword").keyup(function(){
 
 
  $(".modificarButtonModal").click(function(){
+    var url = $("#url").val();
     var id = $(this).val();
     // alert(id);
     
@@ -706,7 +713,7 @@ $(".confirmarPassword").keyup(function(){
             }*/
             
             $.ajax({
-              url: 'Usuarios/Modificar',    
+              url: url+'/Modificar',    
               type: 'POST',   
               data: {
                 Editar: true,   
@@ -776,6 +783,7 @@ $(".confirmarPassword").keyup(function(){
 
 
   $(".eliminarBtn").click(function(){
+    var url = $("#url").val();
       swal.fire({ 
           title: "¿Desea borrar los datos?",
           text: "Se borraran los datos escogidos, ¿desea continuar?",
@@ -802,7 +810,7 @@ $(".confirmarPassword").keyup(function(){
                         /*window.alert($(this).val());*/
                         let userDelete = $(this).val();
                       $.ajax({
-                        url: 'Usuarios/Eliminar',    
+                        url: url+'/Eliminar',    
                         type: 'POST',   
                         data: {
                           Eliminar: true,   

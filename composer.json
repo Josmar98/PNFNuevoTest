@@ -1,14 +1,18 @@
-{
-    "description": "Electiva III",
+{   
+    "description": "SCHSL",
     "type": "project",
     "authors": [{
-        "name": "Jesus Bracho",
-        "email": "brachojd22@gmail.com"
+        "name": "Josmar, Samuel, Yosneidy, Lynneth",
+        "email": "pnfhsl10@gmail.com"
     }],
     "autoload": {
         "psr-4": {
             "config\\": "content/config",
             "content\\": "content"
         }
+    },
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.24",
+        "phpmailer/phpmailer": "^6.6"
     }
 }

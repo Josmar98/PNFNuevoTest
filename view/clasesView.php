@@ -23,8 +23,8 @@
         <small><?php echo "Ver ".$url; ?></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="?route=Home"><i class="fa fa-dashboard"></i> Inicio </a></li>
-        <li><a href="?route=<?php echo $url ?>"><?php echo $url; ?></a></li>
+        <li><a href="<?=_ROUTE_.$this->encriptar("Home"); ?>"><i class="fa fa-dashboard"></i> Inicio </a></li>
+        <li><a href="<?=_ROUTE_.$this->encriptar("Clases"); ?>"><?php echo $url; ?></a></li>
         <li class="active"><?php if(!empty($action)){echo $action;} echo " ". $url; ?></li>
       </ol>
     </section>
@@ -39,7 +39,7 @@
           <div class="box">
             <div class="box-header">
                <div class="col-xs-12 col-sm-6">
-                <img src="assets/img/logolista.png" style="width:25px;color:red !importante;">
+                <img src="assets/img/logolista.png" style="width:25px;">
                 <h3 class="box-title"><?php echo "".$url.""; ?></h3>
               </div>
               <div class="col-xs-12 col-sm-6" style="text-align:right">
@@ -53,6 +53,7 @@
 
 
                 <button type="button" class="btn enviar2 btn-next btn-fill btn btn-primary btn-wd btn-sm" data-toggle="modal" data-target="#modalAgregarClase">Agregar Nuevo</button>
+                  <input type="hidden" id="url" value="<?= $this->encriptar($this->url); ?>">
 
               <!--=====================================
               MODAL AGREGAR PROF
@@ -90,7 +91,7 @@
 
                             <!-- ENTRADA PARA SELECCIONAR SECCIONES-->
                             <div class="form-group col-xs-12 col-sm-12">
-                              <label for="seccion">Seccion</label>                              
+                              <label for="seccion">Seccion</label>
                               <div class="input-group" style="width:100%;">
                                 <span class="input-group-addon" style="width:5%;"><i class="fa fa-cogs"></i></span> 
                                 <select class="form-control select2 input-lg" style="width:100%;" name="seccion" id="seccion">
@@ -430,8 +431,8 @@
 <?php endif; ?>
 <script>
 $(document).ready(function(){ 
-  
   $('#seccion').change(function(){
+    var url = $("#url").val();
     var seccion = $(this).val();
     if(seccion==""){
       var html = '';
@@ -439,7 +440,7 @@ $(document).ready(function(){
       $("#saber").html(html);
     }else{
       $.ajax({
-        url: 'Clases/Buscar',    
+        url: url+'/Buscar',    
         type: 'POST',  
         data: {
           Buscar: true,   
@@ -449,7 +450,7 @@ $(document).ready(function(){
         success: function(respuesta){       
           // alert(respuesta);
           var resp = JSON.parse(respuesta);
-          // console.log(resp);
+          console.log(resp);
           if (resp.msj == "Good") {
             var data = resp.data;
             var dataSaberes = "";
@@ -493,6 +494,8 @@ $(document).ready(function(){
   });
 
   $('.seccionModificar').change(function(){
+
+    var url = $("#url").val();
     var id = $(this).attr("name");
     var seccion = $(this).val();
     // alert(id);
@@ -503,7 +506,7 @@ $(document).ready(function(){
       $("#saber"+id).html(html);
     }else{
       $.ajax({
-        url: 'Clases/Buscar',    
+        url: url+'/Buscar',    
         type: 'POST',  
         data: {
           Buscar: true,   
@@ -563,6 +566,7 @@ $(document).ready(function(){
   });
 
   $(".modificarButtonModal").click(function(){
+    var url = $("#url").val();
     var id = $(this).val();
 
     var response = validar(true, id);
@@ -587,7 +591,7 @@ $(document).ready(function(){
             
             // alert( seccion + ' ' + saber + ' ' + profesor);
             $.ajax({
-              url: 'Clases/Modificar',    
+              url: url+'/Modificar',    
               type: 'POST',   
               data: {
                 Editar: true,   
@@ -610,7 +614,7 @@ $(document).ready(function(){
                       footer: 'SCHSL', timer: 3000, showCloseButton: false, showConfirmButton: false,
                     }).then((isConfirm) => {
                         location.reload();
-                    } );
+                    });
                   } 
                   if (datos.msj === "Repetido") {   
                     Swal.fire({
@@ -656,6 +660,8 @@ $(document).ready(function(){
 
 
   $("#guardar").click(function(){
+
+    var url = $("#url").val();
     var response = validar();
     if(response){
       swal.fire({ 
@@ -683,7 +689,7 @@ $(document).ready(function(){
           // alert( profesor);
 
               $.ajax({
-                url: 'Clases/Agregar',    
+                url: url+'/Agregar',    
                 type: 'POST',   
                 data: {
                   Agregar: true,   
@@ -822,6 +828,8 @@ $(document).ready(function(){
   });
 
   $(".eliminarBtn").click(function(){
+
+    var url = $("#url").val();
       swal.fire({ 
           title: "¿Desea borrar los datos?",
           text: "Se borraran los datos escogidos, ¿desea continuar?",
@@ -850,7 +858,7 @@ $(document).ready(function(){
 
                        /* alert(claseDelete);*/
                       $.ajax({
-                        url: 'Clases/Eliminar',    
+                        url: url+'/Eliminar',    
                         type: 'POST',   
                         data: {
                           Eliminar: true,   

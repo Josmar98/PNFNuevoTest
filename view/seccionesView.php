@@ -23,8 +23,8 @@
         <small><?php echo "Ver ".$url; ?></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="?route=Home"><i class="fa fa-dashboard"></i> Inicio </a></li>
-        <li><a href="?route=<?php echo $url ?>"><?php echo $url; ?></a></li>
+        <li><a href="<?=_ROUTE_.$this->encriptar("Home"); ?>"><i class="fa fa-dashboard"></i> Inicio </a></li>
+        <li><a href="<?=_ROUTE_.$this->encriptar("Secciones"); ?>"><?php echo $url; ?></a></li>
         <li class="active"><?php if(!empty($action)){echo $action;} echo " ". $url; ?></li>
       </ol>
     </section>
@@ -39,11 +39,12 @@
           <div class="box">
             <div class="box-header">
               <div class="col-xs-12 col-sm-6">
-                <img src="assets/img/logolista.png" style="width:25px;color:red !importante;">
+                <img src="assets/img/logolista.png" style="width:25px;">
                 <h3 class="box-title"><?php echo "".$url.""; ?></h3>
               </div>
               <div class="col-xs-12 col-sm-6" style="text-align:right">
                 <button class="btn enviar2" style=""  data-toggle="modal" data-target="#modalAgregarSeccion">Agregar Nuevo</button>
+                  <input type="hidden" id="url" value="<?= $this->encriptar($this->url); ?>">
 
                  <!--=====================================
               MODAL AGREGAR Seccion
@@ -564,6 +565,7 @@ $(document).ready(function(){
   }); 
 
   $('#trayecto').change(function(){
+    var url = $("#url").val();
     var trayecto = $(this).val();
     if(trayecto==""){
       var html = '';
@@ -572,7 +574,7 @@ $(document).ready(function(){
 
     }else{
       $.ajax({
-        url: 'Secciones/Buscar',    
+        url: url+'/Buscar',    
         type: 'POST',  
         data: {
           Buscar: true,   
@@ -626,6 +628,8 @@ $(document).ready(function(){
   });
 
   $('.trayectoModificar').change(function(){
+    var url = $("#url").val();
+
     var id = $(this).attr("name");
     // console.log(id);
     var trayecto = $(this).val();
@@ -636,7 +640,7 @@ $(document).ready(function(){
 
     }else{
       $.ajax({
-        url: 'Secciones/Buscar',    
+        url: url+'/Buscar',    
         type: 'POST',  
         data: {
           Buscar: true,   
@@ -694,6 +698,7 @@ $(document).ready(function(){
   });
 
   $(".modificarButtonModal").click(function(){
+    var url = $("#url").val();
     var id = $(this).val();
     var response = validar(true, id);
     if(response){
@@ -718,7 +723,7 @@ $(document).ready(function(){
             // alert(id + " " + nombre + " " + periodo + " " + trayecto + " " + alumnos);
 
             $.ajax({
-              url: 'Secciones/Modificar',    
+              url: url+'/Modificar',    
               type: 'POST',   
               data: {
                 Editar: true,   
@@ -786,6 +791,7 @@ $(document).ready(function(){
   });
 
   $(".modificarBtn").click(function(){
+    var url = $("#url").val();
     swal.fire({ 
           title: "¿Desea modificar los datos?",
           text: "Se movera al formulario para modificar los datos, ¿desea continuar?",
@@ -800,7 +806,7 @@ $(document).ready(function(){
             let cod_seccion = $(this).val();
             // alert(cod_seccion);
             $.ajax({
-              url: 'Secciones/Buscar',    
+              url: url+'/Buscar',    
               type: 'POST',  
               data: {
                 Buscar: true,   
@@ -832,6 +838,7 @@ $(document).ready(function(){
   });
 
   $(".CargarBtn").click(function(){
+    var url = $("#url").val();
     swal.fire({ 
           title: "¿Desea cargar los datos de los alumnos?",
           text: "Se movera al formulario para cargar los datos, ¿desea continuar?",
@@ -847,7 +854,7 @@ $(document).ready(function(){
             let cod_seccion = $(this).val();
              // alert(cod_seccion);
             $.ajax({
-              url: 'Secciones/Buscar',    
+              url: url+'/Buscar',    
               type: 'POST',  
               data: {
                 Buscar: true,   
@@ -879,6 +886,7 @@ $(document).ready(function(){
   });
 
   $(".eliminarBtn").click(function(){
+    var url = $("#url").val();
       swal.fire({ 
           title: "¿Desea borrar los datos?",
           text: "Se borraran los datos escogidos, ¿desea continuar?",
@@ -905,7 +913,7 @@ $(document).ready(function(){
                       var cod = $(this).val();
                       // alert(cod);
                       $.ajax({
-                        url: 'Secciones/Eliminar',    
+                        url: url+'/Eliminar',    
                         type: 'POST',   
                         data: {
                           Eliminar: true,   
@@ -973,6 +981,7 @@ $(document).ready(function(){
   });
 
   $("#guardar").click(function(){
+    var url = $("#url").val();
     var response = validar();
     if(response){
 
@@ -996,7 +1005,7 @@ $(document).ready(function(){
 
             //alert(nombre + ' ' + periodo + ' ' + trayecto + ' '+ alumnos);
               $.ajax({
-                url: 'Secciones/Agregar',    
+                url: url+'/Agregar',    
                 type: 'POST',   
                 data: {
                   Agregar: true,   
