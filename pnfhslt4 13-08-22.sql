@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-08-2022 a las 05:10:12
+-- Tiempo de generación: 10-08-2022 a las 03:57:38
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.10
 
@@ -133,19 +133,18 @@ CREATE TABLE `alumnos` (
 INSERT INTO `alumnos` (`cedula_alumno`, `nombre_alumno`, `apellido_alumno`, `telefono_alumno`, `trayecto_alumno`, `estatus`) VALUES
 ('07326555', 'Pastora', 'Carreño', '04145142614', '3', 1),
 ('09559044', 'Qwertyui', 'Asdfghjk', '12345678990', '1', 0),
-('09635831', 'Jose', 'Rodriguez', '04125166545', '4', 1),
 ('12243087', 'Lennys', 'Ramos', '04120225089', '2', 1),
 ('12345657', 'Qwerty', 'Asdf', '12345678879', '1', 0),
 ('15432854', 'Luke', 'Howland', '36575466677', '2', 1),
-('26290778', 'Maria', 'Gelvez', '04142562254', '2', 1),
-('26290779', 'Moises', 'Gelvez', '04145555466', '2', 1),
-('26398488', 'Josmar', 'Rodriguez', '04120225089', '3', 1),
-('27736916', 'Samuel', 'Torrealba', '04120558045', '3', 1),
-('27737749', 'Yosneidy', 'Carreño', '04162511104', '3', 1),
-('27828164', 'Lynneth', 'Pereira', '04125114494', '3', 1),
-('29778944', 'Yan', 'Quero', '04161595066', '2', 1),
+('26290778', 'Maria', 'Gelvez', '04142562254', NULL, 1),
+('26290779', 'Moises', 'Gelvez', '04145555466', NULL, 1),
+('26398488', 'Josmar', 'Rodriguez', '04120225089', '4', 1),
+('27736916', 'Samuel', 'Torrealba', '04120558045', NULL, 1),
+('27737749', 'Yosneidy', 'Carreño', '04162511104', NULL, 1),
+('27828164', 'Lynneth', 'Pereira', '04125114494', NULL, 1),
+('29778944', 'Yan', 'Quero', '04161595066', NULL, 1),
 ('30010891', 'Marialis', 'Queralez', '04162511104', '1', 1),
-('30258145', 'Anderson', 'Segura', '04123528946', '2', 1),
+('30258145', 'Anderson', 'Segura', '04123528946', NULL, 1),
 ('5432287', 'Will', 'Traynor', '8765423', '1', 1),
 ('567542', 'Patch', 'Cipriano', '12345', '4', 1),
 ('765282', 'Aegan', 'Cash', '7654323', '1', 1),
@@ -200,10 +199,12 @@ CREATE TABLE `clases` (
 --
 
 INSERT INTO `clases` (`id_clase`, `id_SC`, `cod_seccion`, `cedula_profesor`, `estatus`, `visto_profesor`, `visto_tutor`, `visto_admin`) VALUES
-(7, 1, 'T1P1S1', '11543285', 1, 0, 0, 0),
-(8, 2, 'T2P1S1', '15432287', 1, 0, 0, 0),
-(9, 5, 'T3P1S1', '18906888', 1, 0, 0, 0),
-(10, 6, 'T4P1S1', '18567547', 1, 0, 0, 0);
+(1, 2, 'HG12SL', '27736916', 1, NULL, NULL, NULL),
+(2, 1, 'HG13SL', '27736916', 1, 0, 0, 0),
+(3, 1, 'HG12SL', '18262221', 1, NULL, NULL, NULL),
+(4, 2, 'T2P1S1', '18262221', 1, NULL, NULL, NULL),
+(5, 2, 'T2P1S1', '154328', 1, NULL, NULL, NULL),
+(6, 1, 'T3P1S1', '567542', 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -217,6 +218,18 @@ CREATE TABLE `grupos` (
   `cod_proyecto` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estatus` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `grupos`
+--
+
+INSERT INTO `grupos` (`cod_grupo`, `id_SA`, `cod_proyecto`, `estatus`) VALUES
+('PT2ST2P1S1P1G1', 151, 'T2ST2P1S1P1', 1),
+('PT2ST2P1S1P1G2', 152, 'T2ST2P1S1P1', 1),
+('PT3ST3P1S1P1G1', 147, 'T3ST3P1S1P1', 1),
+('PT3ST3P1S1P1G2', 148, 'T3ST3P1S1P1', 1),
+('PT3ST3P1S1P1G3', 149, 'T3ST3P1S1P1', 1),
+('PT3ST3P1S1P1G4', 150, 'T3ST3P1S1P1', 1);
 
 -- --------------------------------------------------------
 
@@ -267,6 +280,22 @@ CREATE TABLE `notas` (
   `estatus` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`id_nota`, `id_clase`, `id_SA`, `nota`, `fecha_nota`, `hora_nota`, `visto_alumno`, `estatus`) VALUES
+(2, 1, 112, '0.2', '2022-05-25', '11:58 am', NULL, 1),
+(3, 1, 123, '0.4', '2022-05-25', '11:58 am', NULL, 1),
+(7, 2, 112, '1', '2022-05-25', '04:13 pm', NULL, 1),
+(8, 2, 123, '0.9', '2022-05-25', '04:13 pm', NULL, 1),
+(9, 2, 147, '5', '2022-06-16', '10:15 pm', NULL, 1),
+(10, 2, 148, '6', '2022-06-16', '10:15 pm', NULL, 1),
+(11, 2, 149, '0', '2022-06-16', '10:15 pm', NULL, 1),
+(12, 2, 150, '0', '2022-06-16', '10:15 pm', NULL, 1),
+(13, 2, 151, '0', '2022-06-16', '10:15 pm', NULL, 1),
+(14, 2, 152, '0', '2022-06-16', '10:15 pm', NULL, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -287,7 +316,7 @@ CREATE TABLE `periodos` (
 --
 
 INSERT INTO `periodos` (`id_periodo`, `nombre_periodo`, `year_periodo`, `fecha_apertura`, `fecha_cierre`, `estatus`) VALUES
-(1, 'I', '2024', '2022-05-26', '2022-06-23', 1);
+(1, '2000-i', '2024', '2022-05-26', '2022-06-23', 1);
 
 -- --------------------------------------------------------
 
@@ -354,12 +383,12 @@ CREATE TABLE `profesores` (
 --
 
 INSERT INTO `profesores` (`cedula_profesor`, `nombre_profesor`, `apellido_profesor`, `telefono_profesor`, `estatus`) VALUES
-('11543285', 'Parrish', 'Howland', '04123657545', 1),
-('15432287', 'William', 'Butcher', '04248765423', 1),
-('18567547', 'Martin', 'Valverde', '04123457875', 1),
-('18906888', 'Carlos', 'Perez', '04164656711', 1),
-('20765282', 'Aegan', 'Cash', '04147654323', 1),
-('21862547', 'Ernesto', 'Hidago', '04147642341', 1);
+('154328', 'Luke', 'Howland', '365754', 1),
+('5432287', 'Will', 'Traynor', '8765423', 1),
+('567542', 'Patch', 'Cipriano', '12345', 1),
+('765282', 'Aegan', 'Cash', '7654323', 1),
+('78906876', 'Saul ', 'Perez', '45664446567', 1),
+('862547', 'Ares', 'Hidago', '764234', 1);
 
 -- --------------------------------------------------------
 
@@ -457,11 +486,7 @@ CREATE TABLE `saberes` (
 INSERT INTO `saberes` (`id_SC`, `nombreSC`, `trayecto_SC`, `fase_SC`, `estatus`) VALUES
 (1, 'Metodología I', '1', '1', 1),
 (2, 'Metodología II', '2', '1', 1),
-(3, 'Modelo', '2', '2', 1),
-(4, 'Arquitectura', '1', '2', 1),
-(5, 'Estructura I', '3', '1', 1),
-(6, 'Estructura Ii', '4', '1', 1),
-(7, 'Devmot I', '3', '2', 1);
+(3, 'Modelo', '1', '1', 1);
 
 -- --------------------------------------------------------
 
@@ -482,10 +507,8 @@ CREATE TABLE `secciones` (
 --
 
 INSERT INTO `secciones` (`cod_seccion`, `id_periodo`, `nombre_seccion`, `trayecto_seccion`, `estatus`) VALUES
-('T1P1S1', 1, 'SH1101', '1', 1),
-('T2P1S1', 1, 'SH2101', '2', 1),
-('T3P1S1', 1, 'HS3101', '3', 1),
-('T4P1S1', 1, 'HS4101', '4', 1);
+('T2P1S1', 1, 'IN2101', '2', 1),
+('T3P1S1', 1, 'IN3101', '3', 1);
 
 -- --------------------------------------------------------
 
@@ -505,24 +528,12 @@ CREATE TABLE `seccion_alumno` (
 --
 
 INSERT INTO `seccion_alumno` (`id_SA`, `cod_seccion`, `cedula_alumno`, `estatus`) VALUES
-(5, 'T1P1S1', '30010891', 1),
-(6, 'T1P1S1', '5432287', 1),
-(7, 'T1P1S1', '765282', 1),
-(8, 'T2P1S1', '12243087', 1),
-(9, 'T2P1S1', '15432854', 1),
-(10, 'T2P1S1', '26290778', 1),
-(11, 'T2P1S1', '26290779', 1),
-(12, 'T2P1S1', '29778944', 1),
-(13, 'T2P1S1', '30258145', 1),
-(14, 'T2P1S1', '862547', 1),
-(15, 'T3P1S1', '07326555', 1),
-(16, 'T3P1S1', '26398488', 1),
-(17, 'T3P1S1', '27736916', 1),
-(18, 'T3P1S1', '27737749', 1),
-(19, 'T3P1S1', '27828164', 1),
-(20, 'T3P1S1', '789068', 1),
-(21, 'T4P1S1', '09635831', 1),
-(22, 'T4P1S1', '567542', 1);
+(147, 'T3P1S1', '26398488', 1),
+(148, 'T3P1S1', '27736916', 1),
+(149, 'T3P1S1', '27737749', 1),
+(150, 'T3P1S1', '27828164', 1),
+(151, 'T2P1S1', '26290778', 1),
+(152, 'T2P1S1', '26290779', 1);
 
 -- --------------------------------------------------------
 
@@ -692,7 +703,7 @@ ALTER TABLE `bitacora`
 -- AUTO_INCREMENT de la tabla `clases`
 --
 ALTER TABLE `clases`
-  MODIFY `id_clase` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_clase` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `modulos`
@@ -704,7 +715,7 @@ ALTER TABLE `modulos`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_nota` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `periodos`
@@ -728,13 +739,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `saberes`
 --
 ALTER TABLE `saberes`
-  MODIFY `id_SC` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_SC` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `seccion_alumno`
 --
 ALTER TABLE `seccion_alumno`
-  MODIFY `id_SA` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_SA` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -38,7 +38,7 @@
 			$this->passw = $passw;
 			$this->password = md5($this->passw);
 			
-			$sql = ('SELECT * FROM usuarios WHERE nombre_usuario = :user AND password_usuario = :password AND (estatus = 1 OR estatus = 2)');
+			$sql = ('SELECT * FROM usuarios WHERE nombre_usuario = :user AND password_usuario = :password AND estatus = 1');
 			$new = parent::prepare($sql);
 			$new->bindValue(':user', $this->user);
 			$new->bindValue(':password', $this->password);

@@ -29,7 +29,6 @@
 		
 		public function Agregar(){
 			if($_POST){		
-				echo "asdasd CONTROL ";
 				if (!empty($_POST['cedula']) && !empty($_POST['Agregar']) && !empty($_POST['user']) && !empty($_POST['pass']) && !empty($_POST['rol'])) {
 					$datos['cedula'] = $_POST['cedula'];
 					$datos['user'] = $_POST['user'];

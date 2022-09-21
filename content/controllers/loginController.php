@@ -34,7 +34,6 @@
 				if (isset($_POST['username']) && isset($_POST['loginSistema']) && isset($_POST['password'])) {
 					$resp = $this->login->loginSistema($_POST['username'], $_POST['password']); //pasa el user y pass
 					 // var_dump($resp);
-					
 					if($resp['msj'] == "Good"){
 						$intentos = $this->usuario->Intentos($_POST['username']);
 						$int = 0;

@@ -249,12 +249,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 console.log(data);
 
                 if (data.access === "Acceder") { 
-                  // Swal.fire({
-                  //   type: 'success',
-                  //   title: '¡Ingreso exitoso!',
-                  //   text: 'El nombre de usuario y la contraseña no coinciden',
-                  //   footer: 'SCHSL', timer: 2000, showCloseButton: false, showConfirmButton: false,
-                  // }); 
+                  Swal.fire({
+                    type: 'success',
+                    title: '¡Ingreso exitoso!',
+                    text: 'El nombre de usuario y la contraseña no coinciden',
+                    footer: 'SCHSL', timer: 2000, showCloseButton: false, showConfirmButton: false,
+                  }); 
                   $(".content-input.pass p").attr("style", "visibility:hidden;margin-top:.2vw");
                   $(".content-input.user p").attr("style", "visibility:hidden;margin-top:.2vw");
                   

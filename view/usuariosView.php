@@ -547,10 +547,10 @@ $(".confirmarPassword").keyup(function(){
           let user = $("#user").val();
           let pass = $("#pass").val();
 
-          // alert("asdasd");
-          // alert(url);
-          $.ajax({
-            url: url+'/Agregar',    
+        
+        ajax({
+            url: url+
+            '/Agregar',    
             type: 'POST',   
             data: {
               Agregar: true,   
@@ -559,25 +559,24 @@ $(".confirmarPassword").keyup(function(){
               user: user,       
               pass: pass,
             },
-            success: function(respuesta){     
-              alert(respuesta);  
+            success: function(respuesta){       
               var data = JSON.parse(respuesta);    
                // window.alert(respuesta);
               // alert("Hola");
               // alert(data);   
-              if (data.msj === "Good") {   
-                  Swal.fire({
-                    type: 'success',
-                    title: '¡Registro Exitoso!',
-                    text: 'Has agregado al usuario ' + user + ' al sistema',
-                    footer: 'SCHSL',
-                    timer: 4000,
-                    showCloseButton: false,            
-                    showConfirmButton: false,
-                  }).then((isConfirm) => {
+               if (data.msj === "Good") {   
+                 Swal.fire({
+                  type: 'success',
+                  title: '¡Registro Exitoso!',
+                  text: 'Has agregado al usuario ' + user + ' al sistema',
+                  footer: 'SCHSL',
+                  timer: 4000,
+                  showCloseButton: false,            
+                  showConfirmButton: false,
+                }).then((isConfirm) => {
                       location.reload();
                   });
-              }
+               }
               if (datos.msj === "Repetido") {   
                   Swal.fire({
                     type: 'warning',
@@ -585,22 +584,22 @@ $(".confirmarPassword").keyup(function(){
                     text: 'El alumno ' + nombre + ' ' + apellido + ' ya esta agregado al sistema',
                     footer: 'SCHSL', timer: 3000, showCloseButton: false, showConfirmButton: false,
                   });
-              }
-              if (datos.msj === "Error") {   
+                }
+                if (datos.msj === "Error") {   
                   Swal.fire({
                     type: 'error',
                     title: '¡Error la guardar los cambio!',
                     text: 'Intente de nuevo, si el error persiste por favor contacte con el soporte',
                     footer: 'SCHSL', timer: 3000, showCloseButton: false, showConfirmButton: false,
                   });
-              }     
-              if (datos.msj === "Vacio") {   
+                }     
+                if (datos.msj === "Vacio") {   
                   Swal.fire({
                     type: 'warning',
                     title: '¡Debe rellenar todos los campos!',
                     footer: 'SCHSL', timer: 3000, showCloseButton: false, showConfirmButton: false,
                   });
-              }                                         
+                }                                         
             },
             error: function(respuesta){       
               var data = JSON.parse(respuesta);
